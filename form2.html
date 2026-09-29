@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casp Hub</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --orange: #ff9f00;
+  --orange2: #ffb52e;
+  --bg: #0d0d0d;
+  --header: #181818;
+  --panel: #202020;
+  --panel2: #252525;
+  --border: #303030;
+  --text: #f5f5f5;
+  --muted: #999;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+  height: 66px;
+  background: var(--header);
+  border-bottom: 1px solid var(--border);
+
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.logo span {
+  background: var(--orange);
+  color: #111;
+  padding: 3px 7px;
+  border-radius: 4px;
+  margin-left: 2px;
+}
+
+.search-box {
+  width: 360px;
+  margin-left: 35px;
+  position: relative;
+}
+
+.search-box input {
+  width: 100%;
+  height: 38px;
+
+  background: #0c0c0c;
+  border: 1px solid #3a3a3a;
+  border-radius: 5px;
+
+  color: white;
+  padding: 0 42px 0 14px;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: var(--orange);
+}
+
+.search-icon {
+  position: absolute;
+  right: 13px;
+  top: 10px;
+  color: #777;
+}
+
+.nav {
+  display: flex;
+  gap: 23px;
+  margin-left: 35px;
+}
+
+.nav a {
+  font-size: 14px;
+  color: #bbb;
+}
+
+.nav a:hover {
+  color: var(--orange);
+}
+
+.header-right {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.login {
+  padding: 8px 14px;
+  color: #ccc;
+}
+
+.join {
+  background: var(--orange);
+  color: #111;
+  padding: 9px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* ================= CATEGORY BAR ================= */
+
+.category-bar {
+  background: #151515;
+  border-bottom: 1px solid var(--border);
+
+  display: flex;
+  align-items: center;
+
+  padding: 11px 28px;
+
+  gap: 9px;
+
+  overflow-x: auto;
+}
+
+.category-bar a {
+  white-space: nowrap;
+
+  background: #222;
+  border: 1px solid #303030;
+
+  padding: 7px 13px;
+
+  border-radius: 4px;
+
+  color: #aaa;
+  font-size: 12px;
+}
+
+.category-bar a:hover,
+.category-bar a.active {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #111;
+}
+
+/* ================= MAIN ================= */
+
+.main {
+  max-width: 1450px;
+  margin: auto;
+  padding: 25px 28px 60px;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  min-height: 280px;
+
+  border: 1px solid var(--border);
+  border-radius: 6px;
+
+  padding: 45px;
+
+  display: flex;
+  align-items: center;
+
+  background:
+    radial-gradient(
+      circle at 80% 40%,
+      rgba(255,159,0,.14),
+      transparent 35%
+    ),
+    linear-gradient(110deg, #202020, #111);
+
+  margin-bottom: 25px;
+}
+
+.hero-content {
+  max-width: 650px;
+}
+
+.hero-small {
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.hero h1 {
+  font-size: 43px;
+  margin-bottom: 12px;
+}
+
+.hero h1 span {
+  color: var(--orange);
+}
+
+.hero p {
+  color: #999;
+  max-width: 600px;
+  font-size: 15px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.btn-orange {
+  background: var(--orange);
+  color: #111;
+  border: 0;
+  padding: 11px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-dark {
+  background: #292929;
+  color: #eee;
+  border: 1px solid #444;
+  padding: 11px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ================= TOOLBAR ================= */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 17px;
+}
+
+.toolbar h2 {
+  font-size: 21px;
+}
+
+.toolbar h2 span {
+  color: var(--orange);
+}
+
+.filters {
+  margin-left: auto;
+  display: flex;
+  gap: 7px;
+}
+
+.filter {
+  background: #1c1c1c;
+  color: #aaa;
+  border: 1px solid #333;
+  padding: 7px 11px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.filter.active {
+  color: var(--orange);
+  border-color: var(--orange);
+}
+
+/* ================= CONTENT GRID ================= */
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 17px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  overflow: hidden;
+  transition: .2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: #555;
+}
+
+.thumb {
+  height: 190px;
+  position: relative;
+  background: #292929;
+  overflow: hidden;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumb-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #666;
+  font-size: 12px;
+}
+
+.duration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+
+  background: rgba(0,0,0,.85);
+  padding: 3px 6px;
+
+  font-size: 10px;
+  border-radius: 3px;
+}
+
+.badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+
+  background: var(--orange);
+  color: #111;
+
+  padding: 4px 7px;
+
+  border-radius: 3px;
+
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.card-info {
+  padding: 12px;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: bold;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-creator {
+  margin-top: 5px;
+  color: #777;
+  font-size: 11px;
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 10px;
+
+  color: #777;
+  font-size: 10px;
+}
+
+.card-bottom .premium {
+  color: var(--orange);
+}
+
+/* ================= PROMO ================= */
+
+.promo {
+  margin: 50px 0;
+
+  background:
+    linear-gradient(
+      120deg,
+      #272727,
+      #151515
+    );
+
+  border: 1px solid #393939;
+  border-radius: 7px;
+
+  padding: 35px;
+
+  display: flex;
+  align-items: center;
+}
+
+.promo-text {
+  max-width: 650px;
+}
+
+.promo h2 {
+  font-size: 27px;
+  margin-bottom: 7px;
+}
+
+.promo p {
+  color: #888;
+  font-size: 13px;
+}
+
+.promo button {
+  margin-left: auto;
+}
+
+/* ================= CREATORS ================= */
+
+.creator-section {
+  margin-top: 40px;
+}
+
+.creator-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.creator {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+
+  padding: 20px 15px;
+  text-align: center;
+}
+
+.avatar {
+  width: 62px;
+  height: 62px;
+
+  margin: auto auto 10px;
+
+  border-radius: 50%;
+
+  background: #333;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #888;
+  font-size: 20px;
+}
+
+.creator h3 {
+  font-size: 13px;
+}
+
+.creator p {
+  color: #777;
+  font-size: 10px;
+  margin: 4px 0 12px;
+}
+
+.follow {
+  width: 100%;
+
+  background: transparent;
+  color: #ccc;
+
+  border: 1px solid #444;
+  border-radius: 4px;
+
+  padding: 7px;
+
+  font-size: 11px;
+}
+
+.follow:hover {
+  color: var(--orange);
+  border-color: var(--orange);
+}
+
+/* ================= PRICING ================= */
+
+.pricing-section {
+  margin-top: 65px;
+  padding: 50px 0;
+
+  border-top: 1px solid var(--border);
+}
+
+.pricing-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pricing-title h2 {
+  font-size: 30px;
+}
+
+.pricing-title span {
+  color: var(--orange);
+}
+
+.pricing-title p {
+  color: #777;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.price-card {
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 28px;
+  position: relative;
+}
+
+.price-card.featured {
+  border: 1px solid var(--orange);
+}
+
+.popular {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: var(--orange);
+  color: #111;
+
+  padding: 4px 11px;
+  border-radius: 20px;
+
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.price-name {
+  color: #aaa;
+  font-size: 12px;
+}
+
+.price {
+  font-size: 35px;
+  font-weight: bold;
+  margin: 8px 0;
+}
+
+.price small {
+  color: #666;
+  font-size: 11px;
+}
+
+.price-description {
+  color: #777;
+  font-size: 12px;
+  margin-bottom: 18px;
+}
+
+.features {
+  list-style: none;
+  margin-bottom: 22px;
+}
+
+.features li {
+  padding: 7px 0;
+  border-bottom: 1px solid #292929;
+  color: #aaa;
+  font-size: 12px;
+}
+
+.features li::before {
+  content: "✓";
+  color: var(--orange);
+  margin-right: 7px;
+}
+
+.subscribe {
+  width: 100%;
+  padding: 10px;
+
+  background: #111;
+  border: 1px solid #444;
+
+  color: #eee;
+
+  border-radius: 4px;
+
+  cursor: pointer;
+}
+
+.featured .subscribe {
+  background: var(--orange);
+  color: #111;
+  border-color: var(--orange);
+  font-weight: bold;
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+  background: #171717;
+  border-top: 1px solid var(--border);
+
+  padding: 45px 28px 20px;
+}
+
+.footer-grid {
+  max-width: 1200px;
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 35px;
+}
+
+.footer p {
+  color: #666;
+  font-size: 12px;
+  max-width: 300px;
+  margin-top: 12px;
+}
+
+.footer h4 {
+  font-size: 13px;
+  margin-bottom: 13px;
+}
+
+.footer a {
+  display: block;
+  color: #666;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.footer a:hover {
+  color: var(--orange);
+}
+
+.copyright {
+  max-width: 1200px;
+  margin: 30px auto 0;
+  padding-top: 18px;
+
+  border-top: 1px solid #292929;
+
+  color: #555;
+  font-size: 10px;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 1100px) {
+
+  .nav {
+    display: none;
+  }
+
+  .content-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .creator-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+
+  .header {
+    padding: 0 15px;
+  }
+
+  .search-box {
+    width: 220px;
+    margin-left: 20px;
+  }
+
+  .content-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .creator-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 550px) {
+
+  .header {
+    height: 60px;
+  }
+
+  .search-box {
+    display: none;
+  }
+
+  .login {
+    display: none;
+  }
+
+  .hero {
+    padding: 35px 22px;
+    min-height: 350px;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .hero p {
+    font-size: 13px;
+  }
+
+  .main {
+    padding: 15px 12px 40px;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+
+  .thumb {
+    height: 125px;
+  }
+
+  .card-info {
+    padding: 9px;
+  }
+
+  .card-title {
+    font-size: 12px;
+  }
+
+  .card-creator {
+    font-size: 9px;
+  }
+
+  .creator-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .promo {
+    padding: 25px 18px;
+    display: block;
+  }
+
+  .promo button {
+    margin-top: 18px;
+  }
+
+  .filters {
+    display: none;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="header">
+
+  <a href="#" class="logo">
+    Casp<span>Hub</span>
+  </a>
+
+  <div class="search-box">
+    <input
+      type="search"
+      placeholder="Search Casp Hub..."
+    >
+    <span class="search-icon">⌕</span>
+  </div>
+
+  <nav class="nav">
+    <a href="#">Home</a>
+    <a href="#browse">Browse</a>
+    <a href="#creators">Creators</a>
+    <a href="#subscriptions">Subscriptions</a>
+  </nav>
+
+  <div class="header-right">
+
+    <a href="#" class="login">
+      Login
+    </a>
+
+    <a href="#" class="join">
+      Join
+    </a>
+
+  </div>
+
+</header>
+
+
+<!-- CATEGORY BAR -->
+
+<div class="category-bar">
+
+  <a href="#" class="active">All</a>
+  <a href="#">Trending</a>
+  <a href="#">New</a>
+  <a href="#">Gaming</a>
+  <a href="#">Music</a>
+  <a href="#">Technology</a>
+  <a href="#">Education</a>
+  <a href="#">Design</a>
+  <a href="#">Entertainment</a>
+  <a href="#">Lifestyle</a>
+
+</div>
+
+
+<main class="main">
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <div class="hero-small">
+      WELCOME TO CASP HUB
+    </div>
+
+    <h1>
+      Your world of
+      <span>creators.</span>
+    </h1>
+
+    <p>
+      Discover creators, communities, services and premium
+      content from around the world — all in one place.
+    </p>
+
+    <div class="hero-buttons">
+
+      <a href="#browse" class="btn-orange">
+        Explore Casp Hub
+      </a>
+
+      <a href="#subscriptions" class="btn-dark">
+        View Subscriptions
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TRENDING -->
+
+<section id="browse">
+
+  <div class="toolbar">
+
+    <h2>
+      Trending <span>Now</span>
+    </h2>
+
+    <div class="filters">
+
+      <button class="filter active">
+        Popular
+      </button>
+
+      <button class="filter">
+        Newest
+      </button>
+
+      <button class="filter">
+        Free
+      </button>
+
+      <button class="filter">
+        Premium
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="content-grid">
+
+
+    <!-- CARD -->
+
+    <article class="card">
+
+      <div class="thumb">
+
+        <!-- REPLACE WITH YOUR IMAGE -->
+
+        <img
+          src="images/thumb-1.jpg"
+          alt="Content thumbnail"
+        >
+
+        <span class="badge">
+          PREMIUM
+        </span>
+
+        <span class="duration">
+          12:45
+        </span>
+
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Creative Studio Session
+        </div>
+
+        <div class="card-creator">
+          @CreativeStudio
+        </div>
+
+        <div class="card-bottom">
+          <span>125K views</span>
+          <span class="premium">Premium</span>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <article class="card">
+
+      <div class="thumb">
+
+        <img
+          src="images/thumb-2.jpg"
+          alt="Content thumbnail"
+        >
+
+        <span class="duration">
+          08:21
+        </span>
+
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Building Something New
+        </div>
+
+        <div class="card-creator">
+          @TechSpace
+        </div>
+
+        <div class="card-bottom">
+          <span>94K views</span>
+          <span>Free</span>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <article class="card">
+
+      <div class="thumb">
+
+        <img
+          src="images/thumb-3.jpg"
+          alt="Content thumbnail"
+        >
+
+        <span class="badge">
+          PREMIUM
+        </span>
+
+        <span class="duration">
+          16:30
+        </span>
+
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Behind The Process
+        </div>
+
+        <div class="card-creator">
+          @StudioOne
+        </div>
+
+        <div class="card-bottom">
+          <span>81K views</span>
+          <span class="premium">Premium</span>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <article class="card">
+
+      <div class="thumb">
+
+        <img
+          src="images/thumb-4.jpg"
+          alt="Content thumbnail"
+        >
+
+        <span class="duration">
+          10:18
+        </span>
+
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Weekly Creator Update
+        </div>
+
+        <div class="card-creator">
+          @CreatorLife
+        </div>
+
+        <div class="card-bottom">
+          <span>76K views</span>
+          <span>Free</span>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <article class="card">
+
+      <div class="thumb">
+
+        <img
+          src="images/thumb-5.jpg"
+          alt="Content thumbnail"
+        >
+
+        <span class="badge">
+          PREMIUM
+        </span>
+
+        <span class="duration">
+          22:10
+        </span>
+
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          The Creator Workshop
+        </div>
+
+        <div class="card-creator">
+          @LearnLab
+        </div>
+
+        <div class="card-bottom">
+          <span>65K views</span>
+          <span class="premium">Premium</span>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <article class="card">
+
+      <div class="thumb">
+
+        <img
+          src="images/thumb-6.jpg"
+          alt="Content thumbnail"
+        >
+
+        <span class="duration">
+          14:07
+        </span>
+
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          New Ideas & Projects
+        </div>
+
+        <div class="card-creator">
+          @IdeaHouse
+        </div>
+
+        <div class="card-bottom">
+          <span>52K views</span>
+          <span>Free</span>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <article class="card">
+
+      <div class="thumb">
+
+        <img
+          src="images/thumb-7.jpg"
+          alt="Content thumbnail"
+        >
+
+        <span class="badge">
+          PREMIUM
+        </span>
+
+        <span class="duration">
+          18:42
+        </span>
+
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Premium Creator Talk
+        </div>
+
+        <div class="card-creator">
+          @CreatorTalk
+        </div>
+
+        <div class="card-bottom">
+          <span>48K views</span>
+          <span class="premium">Premium</span>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <article class="card">
+
+      <div class="thumb">
+
+        <img
+          src="images/thumb-8.jpg"
+          alt="Content thumbnail"
+        >
+
+        <span class="duration">
+          09:55
+        </span>
+
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          A Day With A Creator
+        </div>
+
+        <div class="card-creator">
+          @DailyHub
+        </div>
+
+        <div class="card-bottom">
+          <span>42K views</span>
+          <span>Free</span>
+        </div>
+
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- PROMO -->
+
+<section class="promo">
+
+  <div class="promo-text">
+
+    <h2>
+      Unlock more with Casp Hub Premium
+    </h2>
+
+    <p>
+      Get access to premium communities, exclusive creator
+      content and additional platform features.
+    </p>
+
+  </div>
+
+  <a href="#subscriptions" class="btn-orange">
+    Explore Premium
+  </a>
+
+</section>
+
+
+<!-- CREATORS -->
+
+<section class="creator-section" id="creators">
+
+  <div class="toolbar">
+
+    <h2>
+      Popular <span>Creators</span>
+    </h2>
+
+  </div>
+
+
+  <div class="creator-grid">
+
+
+    <div class="creator">
+
+      <div class="avatar">👤</div>
+
+      <h3>Creative Studio</h3>
+
+      <p>125K followers</p>
+
+      <button class="follow">
+        Follow
+      </button>
+
+    </div>
+
+
+    <div class="creator">
+
+      <div class="avatar">👤</div>
+
+      <h3>Tech Space</h3>
+
+      <p>98K followers</p>
+
+      <button class="follow">
+        Follow
+      </button>
+
+    </div>
+
+
+    <div class="creator">
+
+      <div class="avatar">👤</div>
+
+      <h3>Music Lab</h3>
+
+      <p>87K followers</p>
+
+      <button class="follow">
+        Follow
+      </button>
+
+    </div>
+
+
+    <div class="creator">
+
+      <div class="avatar">👤</div>
+
+      <h3>Learn Lab</h3>
+
+      <p>73K followers</p>
+
+      <button class="follow">
+        Follow
+      </button>
+
+    </div>
+
+
+    <div class="creator">
+
+      <div class="avatar">👤</div>
+
+      <h3>Daily Hub</h3>
+
+      <p>64K followers</p>
+
+      <button class="follow">
+        Follow
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SUBSCRIPTIONS -->
+
+<section class="pricing-section" id="subscriptions">
+
+  <div class="pricing-title">
+
+    <h2>
+      Casp Hub <span>Subscriptions</span>
+    </h2>
+
+    <p>
+      Choose the experience that works for you.
+    </p>
+
+  </div>
+
+
+  <div class="pricing-grid">
+
+
+    <div class="price-card">
+
+      <div class="price-name">
+        FREE
+      </div>
+
+      <div class="price">
+        $0 <small>/ month</small>
+      </div>
+
+      <div class="price-description">
+        Start exploring Casp Hub.
+      </div>
+
+      <ul class="features">
+        <li>Browse creators</li>
+        <li>Public content</li>
+        <li>Follow creators</li>
+        <li>Basic profile</li>
+      </ul>
+
+      <button class="subscribe">
+        Get Started
+      </button>
+
+    </div>
+
+
+    <div class="price-card featured">
+
+      <div class="popular">
+        MOST POPULAR
+      </div>
+
+      <div class="price-name">
+        PREMIUM
+      </div>
+
+      <div class="price">
+        $9.99 <small>/ month</small>
+      </div>
+
+      <div class="price-description">
+        More access and premium features.
+      </div>
+
+      <ul class="features">
+        <li>Everything in Free</li>
+        <li>Premium content</li>
+        <li>Exclusive communities</li>
+        <li>Advanced profile</li>
+        <li>Priority support</li>
+      </ul>
+
+      <button class="subscribe">
+        Subscribe
+      </button>
+
+    </div>
+
+
+    <div class="price-card">
+
+      <div class="price-name">
+        CREATOR PRO
+      </div>
+
+      <div class="price">
+        $19.99 <small>/ month</small>
+      </div>
+
+      <div class="price-description">
+        Tools for professional creators.
+      </div>
+
+      <ul class="features">
+        <li>Everything in Premium</li>
+        <li>Creator dashboard</li>
+        <li>Advanced analytics</li>
+        <li>Custom profile</li>
+        <li>Creator tools</li>
+      </ul>
+
+      <button class="subscribe">
+        Start Creating
+      </button>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+  <div class="footer-grid">
+
+    <div>
+
+      <div class="logo">
+        Casp<span>Hub</span>
+      </div>
+
+      <p>
+        A modern creator and community platform
+        for discovering content, services and people.
+      </p>
+
+    </div>
+
+
+    <div>
+
+      <h4>Explore</h4>
+
+      <a href="#">Home</a>
+      <a href="#">Trending</a>
+      <a href="#">Creators</a>
+      <a href="#">Categories</a>
+
+    </div>
+
+
+    <div>
+
+      <h4>Platform</h4>
+
+      <a href="#">Subscriptions</a>
+      <a href="#">Creator Tools</a>
+      <a href="#">Services</a>
+      <a href="#">Community</a>
+
+    </div>
+
+
+    <div>
+
+      <h4>Support</h4>
+
+      <a href="#">Help Center</a>
+      <a href="#">Contact</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+
+    </div>
+
+  </div>
+
+
+  <div class="copyright">
+    © 2026 Casp Hub. All rights reserved.
+  </div>
+
+</footer>
+
+</body>
+</html>

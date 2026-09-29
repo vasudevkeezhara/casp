@@ -3,54 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Casp Hub</title>
+
+<title>Casp Hub — Creator Platform</title>
 
 <style>
+/* =========================================================
+   CASP HUB
+   Single-file frontend
+========================================================= */
+
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 :root {
   --orange: #ff9f00;
   --orange2: #ffb52e;
   --bg: #0d0d0d;
-  --header: #181818;
-  --panel: #202020;
-  --panel2: #252525;
+  --header: #171717;
+  --panel: #1c1c1c;
+  --panel2: #232323;
   --border: #303030;
   --text: #f5f5f5;
-  --muted: #999;
+  --muted: #8c8c8c;
+  --green: #38d27b;
+  --red: #ff5d5d;
+}
+
+body.light {
+  --bg: #f4f4f4;
+  --header: #ffffff;
+  --panel: #ffffff;
+  --panel2: #eeeeee;
+  --border: #dddddd;
+  --text: #171717;
+  --muted: #666666;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background .25s, color .25s;
+}
+
+body.no-scroll {
+  overflow: hidden;
 }
 
 a {
-  text-decoration: none;
   color: inherit;
+  text-decoration: none;
 }
 
 button,
-input {
+input,
+textarea,
+select {
   font-family: inherit;
 }
 
-/* ================= HEADER ================= */
+button {
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1450px;
+  margin: auto;
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header {
   height: 66px;
   background: var(--header);
   border-bottom: 1px solid var(--border);
-
   display: flex;
   align-items: center;
   padding: 0 28px;
-
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -79,14 +119,17 @@ input {
 .search-box input {
   width: 100%;
   height: 38px;
-
   background: #0c0c0c;
   border: 1px solid #3a3a3a;
   border-radius: 5px;
-
   color: white;
   padding: 0 42px 0 14px;
   outline: none;
+}
+
+body.light .search-box input {
+  background: #f5f5f5;
+  color: #111;
 }
 
 .search-box input:focus {
@@ -96,19 +139,21 @@ input {
 .search-icon {
   position: absolute;
   right: 13px;
-  top: 10px;
+  top: 9px;
   color: #777;
+  pointer-events: none;
 }
 
 .nav {
   display: flex;
-  gap: 23px;
+  gap: 22px;
   margin-left: 35px;
 }
 
 .nav a {
   font-size: 14px;
-  color: #bbb;
+  color: #aaa;
+  transition: .2s;
 }
 
 .nav a:hover {
@@ -118,13 +163,31 @@ input {
 .header-right {
   margin-left: auto;
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+}
+
+.icon-btn:hover {
+  border-color: var(--orange);
+  color: var(--orange);
 }
 
 .login {
   padding: 8px 14px;
-  color: #ccc;
+  color: #bbb;
+}
+
+.login:hover {
+  color: var(--orange);
 }
 
 .join {
@@ -135,34 +198,41 @@ input {
   font-weight: bold;
 }
 
-/* ================= CATEGORY BAR ================= */
+.join:hover {
+  background: var(--orange2);
+}
+
+.mobile-menu {
+  display: none;
+}
+
+/* =========================================================
+   CATEGORY BAR
+========================================================= */
 
 .category-bar {
   background: #151515;
   border-bottom: 1px solid var(--border);
-
   display: flex;
   align-items: center;
-
   padding: 11px 28px;
-
   gap: 9px;
-
   overflow-x: auto;
+}
+
+body.light .category-bar {
+  background: #fafafa;
 }
 
 .category-bar a {
   white-space: nowrap;
-
-  background: #222;
-  border: 1px solid #303030;
-
+  background: var(--panel2);
+  border: 1px solid var(--border);
   padding: 7px 13px;
-
   border-radius: 4px;
-
-  color: #aaa;
+  color: var(--muted);
   font-size: 12px;
+  transition: .2s;
 }
 
 .category-bar a:hover,
@@ -172,53 +242,69 @@ input {
   color: #111;
 }
 
-/* ================= MAIN ================= */
+/* =========================================================
+   MAIN
+========================================================= */
 
 .main {
   max-width: 1450px;
   margin: auto;
-  padding: 25px 28px 60px;
+  padding: 25px 28px 70px;
 }
 
-/* ================= HERO ================= */
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero {
-  min-height: 280px;
-
+  min-height: 330px;
   border: 1px solid var(--border);
-  border-radius: 6px;
-
-  padding: 45px;
-
+  border-radius: 8px;
+  padding: 50px;
   display: flex;
   align-items: center;
 
   background:
     radial-gradient(
       circle at 80% 40%,
-      rgba(255,159,0,.14),
+      rgba(255,159,0,.18),
       transparent 35%
     ),
-    linear-gradient(110deg, #202020, #111);
+    linear-gradient(110deg, #242424, #111);
 
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "CASP";
+  position: absolute;
+  right: 50px;
+  bottom: -35px;
+  font-size: 170px;
+  font-weight: 900;
+  color: rgba(255,255,255,.025);
 }
 
 .hero-content {
-  max-width: 650px;
+  max-width: 680px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-small {
   color: var(--orange);
   font-size: 12px;
   font-weight: bold;
-  letter-spacing: 1px;
-  margin-bottom: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 13px;
 }
 
 .hero h1 {
-  font-size: 43px;
-  margin-bottom: 12px;
+  font-size: 48px;
+  line-height: 1.05;
+  margin-bottom: 15px;
 }
 
 .hero h1 span {
@@ -227,36 +313,80 @@ input {
 
 .hero p {
   color: #999;
-  max-width: 600px;
+  max-width: 620px;
   font-size: 15px;
+  line-height: 1.7;
 }
 
 .hero-buttons {
   display: flex;
   gap: 10px;
-  margin-top: 22px;
+  margin-top: 24px;
+}
+
+.btn-orange,
+.btn-dark {
+  display: inline-block;
+  padding: 11px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 13px;
+  border: none;
 }
 
 .btn-orange {
   background: var(--orange);
   color: #111;
-  border: 0;
-  padding: 11px 20px;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
+}
+
+.btn-orange:hover {
+  background: var(--orange2);
 }
 
 .btn-dark {
   background: #292929;
   color: #eee;
   border: 1px solid #444;
-  padding: 11px 20px;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
-/* ================= TOOLBAR ================= */
+.btn-dark:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 35px;
+}
+
+.stat {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.stat strong {
+  font-size: 23px;
+  display: block;
+}
+
+.stat span {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* =========================================================
+   SECTION TOOLBAR
+========================================================= */
 
 .toolbar {
   display: flex;
@@ -279,20 +409,23 @@ input {
 }
 
 .filter {
-  background: #1c1c1c;
-  color: #aaa;
-  border: 1px solid #333;
+  background: var(--panel);
+  color: var(--muted);
+  border: 1px solid var(--border);
   padding: 7px 11px;
   border-radius: 4px;
   font-size: 12px;
 }
 
-.filter.active {
+.filter.active,
+.filter:hover {
   color: var(--orange);
   border-color: var(--orange);
 }
 
-/* ================= CONTENT GRID ================= */
+/* =========================================================
+   CONTENT GRID
+========================================================= */
 
 .content-grid {
   display: grid;
@@ -303,7 +436,7 @@ input {
 .card {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: 5px;
+  border-radius: 6px;
   overflow: hidden;
   transition: .2s;
 }
@@ -311,6 +444,10 @@ input {
 .card:hover {
   transform: translateY(-3px);
   border-color: #555;
+}
+
+.card.hidden {
+  display: none;
 }
 
 .thumb {
@@ -325,16 +462,19 @@ input {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform .3s;
+}
+
+.card:hover .thumb img {
+  transform: scale(1.04);
 }
 
 .thumb-placeholder {
   width: 100%;
   height: 100%;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   color: #666;
   font-size: 12px;
 }
@@ -343,10 +483,8 @@ input {
   position: absolute;
   bottom: 8px;
   right: 8px;
-
   background: rgba(0,0,0,.85);
   padding: 3px 6px;
-
   font-size: 10px;
   border-radius: 3px;
 }
@@ -355,14 +493,10 @@ input {
   position: absolute;
   top: 8px;
   left: 8px;
-
   background: var(--orange);
   color: #111;
-
   padding: 4px 7px;
-
   border-radius: 3px;
-
   font-size: 9px;
   font-weight: bold;
 }
@@ -374,7 +508,6 @@ input {
 .card-title {
   font-size: 14px;
   font-weight: bold;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -389,9 +522,7 @@ input {
 .card-bottom {
   display: flex;
   justify-content: space-between;
-
   margin-top: 10px;
-
   color: #777;
   font-size: 10px;
 }
@@ -400,23 +531,105 @@ input {
   color: var(--orange);
 }
 
-/* ================= PROMO ================= */
+.card-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 11px;
+}
+
+.card-action {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: #999;
+  padding: 6px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.card-action:hover,
+.card-action.active {
+  color: var(--orange);
+  border-color: var(--orange);
+}
+
+/* =========================================================
+   LOAD MORE
+========================================================= */
+
+.load-more-wrap {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.load-more {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 11px 25px;
+  border-radius: 5px;
+}
+
+.load-more:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+/* =========================================================
+   SERVICES
+========================================================= */
+
+.services-section {
+  margin-top: 60px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 17px;
+}
+
+.service {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 25px;
+}
+
+.service-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background: rgba(255,159,0,.12);
+  color: var(--orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.service h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.service p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   PROMO
+========================================================= */
 
 .promo {
-  margin: 50px 0;
-
-  background:
-    linear-gradient(
-      120deg,
-      #272727,
-      #151515
-    );
-
+  margin: 55px 0;
+  background: linear-gradient(120deg, #272727, #151515);
   border: 1px solid #393939;
   border-radius: 7px;
-
   padding: 35px;
-
   display: flex;
   align-items: center;
 }
@@ -433,16 +646,19 @@ input {
 .promo p {
   color: #888;
   font-size: 13px;
+  line-height: 1.6;
 }
 
-.promo button {
+.promo .btn-orange {
   margin-left: auto;
 }
 
-/* ================= CREATORS ================= */
+/* =========================================================
+   CREATORS
+========================================================= */
 
 .creator-section {
-  margin-top: 40px;
+  margin-top: 45px;
 }
 
 .creator-grid {
@@ -455,7 +671,6 @@ input {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 5px;
-
   padding: 20px 15px;
   text-align: center;
 }
@@ -463,17 +678,12 @@ input {
 .avatar {
   width: 62px;
   height: 62px;
-
   margin: auto auto 10px;
-
   border-radius: 50%;
-
   background: #333;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   color: #888;
   font-size: 20px;
 }
@@ -490,29 +700,27 @@ input {
 
 .follow {
   width: 100%;
-
   background: transparent;
   color: #ccc;
-
   border: 1px solid #444;
   border-radius: 4px;
-
   padding: 7px;
-
   font-size: 11px;
 }
 
-.follow:hover {
+.follow:hover,
+.follow.following {
   color: var(--orange);
   border-color: var(--orange);
 }
 
-/* ================= PRICING ================= */
+/* =========================================================
+   PRICING
+========================================================= */
 
 .pricing-section {
   margin-top: 65px;
   padding: 50px 0;
-
   border-top: 1px solid var(--border);
 }
 
@@ -544,7 +752,7 @@ input {
 }
 
 .price-card {
-  background: #1a1a1a;
+  background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 28px;
@@ -560,13 +768,10 @@ input {
   top: -11px;
   left: 50%;
   transform: translateX(-50%);
-
   background: var(--orange);
   color: #111;
-
   padding: 4px 11px;
   border-radius: 20px;
-
   font-size: 9px;
   font-weight: bold;
 }
@@ -614,15 +819,10 @@ input {
 .subscribe {
   width: 100%;
   padding: 10px;
-
   background: #111;
   border: 1px solid #444;
-
   color: #eee;
-
   border-radius: 4px;
-
-  cursor: pointer;
 }
 
 .featured .subscribe {
@@ -632,19 +832,73 @@ input {
   font-weight: bold;
 }
 
-/* ================= FOOTER ================= */
+.subscribe:hover {
+  opacity: .85;
+}
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+.faq-section {
+  max-width: 900px;
+  margin: 50px auto;
+}
+
+.faq-section h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.faq {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 5px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.faq-question {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  text-align: left;
+  padding: 17px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.faq-answer {
+  display: none;
+  padding: 0 17px 17px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.faq.open .faq-answer {
+  display: block;
+}
+
+.faq-question span {
+  color: var(--orange);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 .footer {
   background: #171717;
   border-top: 1px solid var(--border);
-
   padding: 45px 28px 20px;
 }
 
 .footer-grid {
   max-width: 1200px;
   margin: auto;
-
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 35px;
@@ -655,6 +909,7 @@ input {
   font-size: 12px;
   max-width: 300px;
   margin-top: 12px;
+  line-height: 1.6;
 }
 
 .footer h4 {
@@ -677,14 +932,176 @@ input {
   max-width: 1200px;
   margin: 30px auto 0;
   padding-top: 18px;
-
   border-top: 1px solid #292929;
-
   color: #555;
   font-size: 10px;
 }
 
-/* ================= MOBILE ================= */
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+  padding: 20px;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 440px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  position: relative;
+  box-shadow: 0 20px 70px rgba(0,0,0,.5);
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: transparent;
+  border: 0;
+  color: #999;
+  font-size: 23px;
+}
+
+.modal h2 {
+  margin-bottom: 7px;
+}
+
+.modal > p {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  color: #aaa;
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 11px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: #101010;
+  color: white;
+  outline: none;
+}
+
+body.light .form-group input {
+  background: #f5f5f5;
+  color: #111;
+}
+
+.form-group input:focus {
+  border-color: var(--orange);
+}
+
+.modal-submit {
+  width: 100%;
+  background: var(--orange);
+  color: #111;
+  border: 0;
+  border-radius: 5px;
+  padding: 11px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.demo-note {
+  color: #666;
+  text-align: center;
+  font-size: 10px;
+  margin-top: 12px;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast-container {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toast {
+  background: #222;
+  color: white;
+  border: 1px solid #444;
+  padding: 12px 16px;
+  border-radius: 5px;
+  font-size: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.35);
+  animation: toastIn .25s ease;
+}
+
+@keyframes toastIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background: var(--header);
+  border-bottom: 1px solid var(--border);
+  z-index: 999;
+  padding: 15px;
+}
+
+.mobile-nav.show {
+  display: block;
+}
+
+.mobile-nav a {
+  display: block;
+  padding: 13px;
+  color: #aaa;
+  border-bottom: 1px solid var(--border);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media (max-width: 1100px) {
 
@@ -716,16 +1133,22 @@ input {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .creator-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
+  .creator-grid,
+  .services-grid,
   .pricing-grid {
     grid-template-columns: 1fr;
   }
 
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .footer-grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .mobile-menu {
+    display: block;
   }
 }
 
@@ -781,7 +1204,11 @@ input {
     font-size: 9px;
   }
 
-  .creator-grid {
+  .card-actions {
+    flex-direction: column;
+  }
+
+  .stats {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -790,7 +1217,8 @@ input {
     display: block;
   }
 
-  .promo button {
+  .promo .btn-orange {
+    display: inline-block;
     margin-top: 18px;
   }
 
@@ -807,65 +1235,117 @@ input {
 
 <body>
 
-<!-- HEADER -->
+<!-- =======================================================
+     HEADER
+======================================================= -->
 
 <header class="header">
 
-  <a href="#" class="logo">
+  <button class="icon-btn mobile-menu" id="mobileMenuBtn">
+    ☰
+  </button>
+
+  <a href="#home" class="logo">
     Casp<span>Hub</span>
   </a>
 
   <div class="search-box">
     <input
       type="search"
+      id="searchInput"
       placeholder="Search Casp Hub..."
     >
     <span class="search-icon">⌕</span>
   </div>
 
   <nav class="nav">
-    <a href="#">Home</a>
+    <a href="#home">Home</a>
     <a href="#browse">Browse</a>
+    <a href="#services">Services</a>
     <a href="#creators">Creators</a>
     <a href="#subscriptions">Subscriptions</a>
   </nav>
 
   <div class="header-right">
 
-    <a href="#" class="login">
-      Login
-    </a>
+    <button class="icon-btn" id="themeBtn" title="Toggle theme">
+      ☀
+    </button>
 
-    <a href="#" class="join">
+    <button class="login" id="loginBtn">
+      Login
+    </button>
+
+    <button class="join" id="joinBtn">
       Join
-    </a>
+    </button>
 
   </div>
 
 </header>
 
+<!-- MOBILE NAV -->
 
-<!-- CATEGORY BAR -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#home">Home</a>
+  <a href="#browse">Browse</a>
+  <a href="#services">Services</a>
+  <a href="#creators">Creators</a>
+  <a href="#subscriptions">Subscriptions</a>
+</div>
+
+
+<!-- =======================================================
+     CATEGORY BAR
+======================================================= -->
 
 <div class="category-bar">
 
-  <a href="#" class="active">All</a>
-  <a href="#">Trending</a>
-  <a href="#">New</a>
-  <a href="#">Gaming</a>
-  <a href="#">Music</a>
-  <a href="#">Technology</a>
-  <a href="#">Education</a>
-  <a href="#">Design</a>
-  <a href="#">Entertainment</a>
-  <a href="#">Lifestyle</a>
+  <a href="#" class="category active" data-category="all">
+    All
+  </a>
+
+  <a href="#" class="category" data-category="trending">
+    Trending
+  </a>
+
+  <a href="#" class="category" data-category="new">
+    New
+  </a>
+
+  <a href="#" class="category" data-category="gaming">
+    Gaming
+  </a>
+
+  <a href="#" class="category" data-category="music">
+    Music
+  </a>
+
+  <a href="#" class="category" data-category="technology">
+    Technology
+  </a>
+
+  <a href="#" class="category" data-category="education">
+    Education
+  </a>
+
+  <a href="#" class="category" data-category="design">
+    Design
+  </a>
+
+  <a href="#" class="category" data-category="lifestyle">
+    Lifestyle
+  </a>
 
 </div>
 
 
-<main class="main">
+<main class="main" id="home">
 
-<!-- HERO -->
+
+<!-- =======================================================
+     HERO
+======================================================= -->
 
 <section class="hero">
 
@@ -902,31 +1382,66 @@ input {
 </section>
 
 
-<!-- TRENDING -->
+<!-- =======================================================
+     STATS
+======================================================= -->
+
+<section class="stats">
+
+  <div class="stat">
+    <strong>25K+</strong>
+    <span>Creators</span>
+  </div>
+
+  <div class="stat">
+    <strong>1.2M+</strong>
+    <span>Community Members</span>
+  </div>
+
+  <div class="stat">
+    <strong>85K+</strong>
+    <span>Published Posts</span>
+  </div>
+
+  <div class="stat">
+    <strong>150+</strong>
+    <span>Categories</span>
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     BROWSE
+======================================================= -->
 
 <section id="browse">
 
   <div class="toolbar">
 
     <h2>
-      Trending <span>Now</span>
+      Discover <span>Content</span>
     </h2>
 
     <div class="filters">
 
-      <button class="filter active">
+      <button class="filter active" data-filter="all">
+        All
+      </button>
+
+      <button class="filter" data-filter="popular">
         Popular
       </button>
 
-      <button class="filter">
+      <button class="filter" data-filter="new">
         Newest
       </button>
 
-      <button class="filter">
+      <button class="filter" data-filter="free">
         Free
       </button>
 
-      <button class="filter">
+      <button class="filter" data-filter="premium">
         Premium
       </button>
 
@@ -935,29 +1450,22 @@ input {
   </div>
 
 
-  <div class="content-grid">
+  <div class="content-grid" id="contentGrid">
 
 
-    <!-- CARD -->
+    <!-- CARD 1 -->
 
-    <article class="card">
+    <article class="card"
+      data-category="design"
+      data-type="premium"
+      data-status="popular">
 
       <div class="thumb">
 
-        <!-- REPLACE WITH YOUR IMAGE -->
+        <img src="images/thumb-1.jpg" alt="Creative Studio Session">
 
-        <img
-          src="images/thumb-1.jpg"
-          alt="Content thumbnail"
-        >
-
-        <span class="badge">
-          PREMIUM
-        </span>
-
-        <span class="duration">
-          12:45
-        </span>
+        <span class="badge">PREMIUM</span>
+        <span class="duration">12:45</span>
 
       </div>
 
@@ -976,24 +1484,32 @@ input {
           <span class="premium">Premium</span>
         </div>
 
+        <div class="card-actions">
+          <button class="card-action like-btn">
+            ♡ Like
+          </button>
+
+          <button class="card-action save-btn">
+            ☆ Save
+          </button>
+        </div>
+
       </div>
 
     </article>
 
 
-    <article class="card">
+    <!-- CARD 2 -->
+
+    <article class="card"
+      data-category="technology"
+      data-type="free"
+      data-status="popular">
 
       <div class="thumb">
+        <img src="images/thumb-2.jpg" alt="Technology content">
 
-        <img
-          src="images/thumb-2.jpg"
-          alt="Content thumbnail"
-        >
-
-        <span class="duration">
-          08:21
-        </span>
-
+        <span class="duration">08:21</span>
       </div>
 
       <div class="card-info">
@@ -1011,28 +1527,28 @@ input {
           <span>Free</span>
         </div>
 
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
       </div>
 
     </article>
 
 
-    <article class="card">
+    <!-- CARD 3 -->
+
+    <article class="card"
+      data-category="design"
+      data-type="premium"
+      data-status="popular">
 
       <div class="thumb">
+        <img src="images/thumb-3.jpg" alt="Design process">
 
-        <img
-          src="images/thumb-3.jpg"
-          alt="Content thumbnail"
-        >
-
-        <span class="badge">
-          PREMIUM
-        </span>
-
-        <span class="duration">
-          16:30
-        </span>
-
+        <span class="badge">PREMIUM</span>
+        <span class="duration">16:30</span>
       </div>
 
       <div class="card-info">
@@ -1050,24 +1566,27 @@ input {
           <span class="premium">Premium</span>
         </div>
 
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
       </div>
 
     </article>
 
 
-    <article class="card">
+    <!-- CARD 4 -->
+
+    <article class="card"
+      data-category="lifestyle"
+      data-type="free"
+      data-status="new">
 
       <div class="thumb">
+        <img src="images/thumb-4.jpg" alt="Creator update">
 
-        <img
-          src="images/thumb-4.jpg"
-          alt="Content thumbnail"
-        >
-
-        <span class="duration">
-          10:18
-        </span>
-
+        <span class="duration">10:18</span>
       </div>
 
       <div class="card-info">
@@ -1085,28 +1604,28 @@ input {
           <span>Free</span>
         </div>
 
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
       </div>
 
     </article>
 
 
-    <article class="card">
+    <!-- CARD 5 -->
+
+    <article class="card"
+      data-category="education"
+      data-type="premium"
+      data-status="new">
 
       <div class="thumb">
+        <img src="images/thumb-5.jpg" alt="Creator workshop">
 
-        <img
-          src="images/thumb-5.jpg"
-          alt="Content thumbnail"
-        >
-
-        <span class="badge">
-          PREMIUM
-        </span>
-
-        <span class="duration">
-          22:10
-        </span>
-
+        <span class="badge">PREMIUM</span>
+        <span class="duration">22:10</span>
       </div>
 
       <div class="card-info">
@@ -1124,24 +1643,27 @@ input {
           <span class="premium">Premium</span>
         </div>
 
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
       </div>
 
     </article>
 
 
-    <article class="card">
+    <!-- CARD 6 -->
+
+    <article class="card"
+      data-category="technology"
+      data-type="free"
+      data-status="new">
 
       <div class="thumb">
+        <img src="images/thumb-6.jpg" alt="New projects">
 
-        <img
-          src="images/thumb-6.jpg"
-          alt="Content thumbnail"
-        >
-
-        <span class="duration">
-          14:07
-        </span>
-
+        <span class="duration">14:07</span>
       </div>
 
       <div class="card-info">
@@ -1159,28 +1681,28 @@ input {
           <span>Free</span>
         </div>
 
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
       </div>
 
     </article>
 
 
-    <article class="card">
+    <!-- CARD 7 -->
+
+    <article class="card"
+      data-category="music"
+      data-type="premium"
+      data-status="popular">
 
       <div class="thumb">
+        <img src="images/thumb-7.jpg" alt="Music creator talk">
 
-        <img
-          src="images/thumb-7.jpg"
-          alt="Content thumbnail"
-        >
-
-        <span class="badge">
-          PREMIUM
-        </span>
-
-        <span class="duration">
-          18:42
-        </span>
-
+        <span class="badge">PREMIUM</span>
+        <span class="duration">18:42</span>
       </div>
 
       <div class="card-info">
@@ -1198,24 +1720,27 @@ input {
           <span class="premium">Premium</span>
         </div>
 
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
       </div>
 
     </article>
 
 
-    <article class="card">
+    <!-- CARD 8 -->
+
+    <article class="card"
+      data-category="lifestyle"
+      data-type="free"
+      data-status="popular">
 
       <div class="thumb">
+        <img src="images/thumb-8.jpg" alt="Creator day">
 
-        <img
-          src="images/thumb-8.jpg"
-          alt="Content thumbnail"
-        >
-
-        <span class="duration">
-          09:55
-        </span>
-
+        <span class="duration">09:55</span>
       </div>
 
       <div class="card-info">
@@ -1233,16 +1758,646 @@ input {
           <span>Free</span>
         </div>
 
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 9 -->
+
+    <article class="card"
+      data-category="design"
+      data-type="free"
+      data-status="new">
+
+      <div class="thumb">
+        <img src="images/thumb-9.jpg" alt="Creative ideas">
+
+        <span class="duration">11:32</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Creative Ideas Weekly
+        </div>
+
+        <div class="card-creator">
+          @IdeaStudio
+        </div>
+
+        <div class="card-bottom">
+          <span>39K views</span>
+          <span>Free</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 10 -->
+
+    <article class="card"
+      data-category="education"
+      data-type="premium"
+      data-status="new">
+
+      <div class="thumb">
+        <img src="images/thumb-10.jpg" alt="Design workshop">
+
+        <span class="badge">PREMIUM</span>
+        <span class="duration">19:44</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Advanced Design Workshop
+        </div>
+
+        <div class="card-creator">
+          @DesignLab
+        </div>
+
+        <div class="card-bottom">
+          <span>35K views</span>
+          <span class="premium">Premium</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 11 -->
+
+    <article class="card"
+      data-category="technology"
+      data-type="free"
+      data-status="new">
+
+      <div class="thumb">
+        <img src="images/thumb-11.jpg" alt="Tech news">
+
+        <span class="duration">07:28</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Tech News & Updates
+        </div>
+
+        <div class="card-creator">
+          @TechDaily
+        </div>
+
+        <div class="card-bottom">
+          <span>31K views</span>
+          <span>Free</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 12 -->
+
+    <article class="card"
+      data-category="design"
+      data-type="premium"
+      data-status="popular">
+
+      <div class="thumb">
+        <img src="images/thumb-12.jpg" alt="Creative process">
+
+        <span class="badge">PREMIUM</span>
+        <span class="duration">15:16</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Inside The Creative Process
+        </div>
+
+        <div class="card-creator">
+          @CreativeHub
+        </div>
+
+        <div class="card-bottom">
+          <span>28K views</span>
+          <span class="premium">Premium</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 13 -->
+
+    <article class="card"
+      data-category="education"
+      data-type="free"
+      data-status="new">
+
+      <div class="thumb">
+        <img src="images/thumb-13.jpg" alt="Learning content">
+
+        <span class="duration">13:05</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Learning Something New
+        </div>
+
+        <div class="card-creator">
+          @LearnToday
+        </div>
+
+        <div class="card-bottom">
+          <span>26K views</span>
+          <span>Free</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 14 -->
+
+    <article class="card"
+      data-category="education"
+      data-type="premium"
+      data-status="popular">
+
+      <div class="thumb">
+        <img src="images/thumb-14.jpg" alt="Creator masterclass">
+
+        <span class="badge">PREMIUM</span>
+        <span class="duration">21:18</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Creator Masterclass
+        </div>
+
+        <div class="card-creator">
+          @MasterStudio
+        </div>
+
+        <div class="card-bottom">
+          <span>22K views</span>
+          <span class="premium">Premium</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 15 -->
+
+    <article class="card"
+      data-category="lifestyle"
+      data-type="free"
+      data-status="new">
+
+      <div class="thumb">
+        <img src="images/thumb-15.jpg" alt="Behind the scenes">
+
+        <span class="duration">09:41</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Behind The Scenes
+        </div>
+
+        <div class="card-creator">
+          @StudioDaily
+        </div>
+
+        <div class="card-bottom">
+          <span>19K views</span>
+          <span>Free</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 16 -->
+
+    <article class="card"
+      data-category="education"
+      data-type="premium"
+      data-status="popular">
+
+      <div class="thumb">
+        <img src="images/thumb-16.jpg" alt="Creator guide">
+
+        <span class="badge">PREMIUM</span>
+        <span class="duration">17:52</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          The Ultimate Creator Guide
+        </div>
+
+        <div class="card-creator">
+          @CreatorAcademy
+        </div>
+
+        <div class="card-bottom">
+          <span>17K views</span>
+          <span class="premium">Premium</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 17 -->
+
+    <article class="card"
+      data-category="gaming"
+      data-type="free"
+      data-status="popular">
+
+      <div class="thumb">
+        <img src="images/thumb-17.jpg" alt="Gaming content">
+
+        <span class="duration">12:16</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Gaming Community Highlights
+        </div>
+
+        <div class="card-creator">
+          @GameZone
+        </div>
+
+        <div class="card-bottom">
+          <span>16K views</span>
+          <span>Free</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 18 -->
+
+    <article class="card"
+      data-category="music"
+      data-type="premium"
+      data-status="new">
+
+      <div class="thumb">
+        <img src="images/thumb-18.jpg" alt="Music studio">
+
+        <span class="badge">PREMIUM</span>
+        <span class="duration">20:05</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Music Studio Session
+        </div>
+
+        <div class="card-creator">
+          @MusicLab
+        </div>
+
+        <div class="card-bottom">
+          <span>15K views</span>
+          <span class="premium">Premium</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 19 -->
+
+    <article class="card"
+      data-category="technology"
+      data-type="free"
+      data-status="new">
+
+      <div class="thumb">
+        <img src="images/thumb-19.jpg" alt="Technology guide">
+
+        <span class="duration">10:44</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Build Your First Project
+        </div>
+
+        <div class="card-creator">
+          @CodeSpace
+        </div>
+
+        <div class="card-bottom">
+          <span>14K views</span>
+          <span>Free</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 20 -->
+
+    <article class="card"
+      data-category="design"
+      data-type="premium"
+      data-status="popular">
+
+      <div class="thumb">
+        <img src="images/thumb-20.jpg" alt="Design masterclass">
+
+        <span class="badge">PREMIUM</span>
+        <span class="duration">24:12</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Modern Design Masterclass
+        </div>
+
+        <div class="card-creator">
+          @DesignPro
+        </div>
+
+        <div class="card-bottom">
+          <span>13K views</span>
+          <span class="premium">Premium</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 21 -->
+
+    <article class="card"
+      data-category="lifestyle"
+      data-type="free"
+      data-status="new">
+
+      <div class="thumb">
+        <img src="images/thumb-21.jpg" alt="Lifestyle content">
+
+        <span class="duration">08:37</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          A Better Daily Routine
+        </div>
+
+        <div class="card-creator">
+          @DailyCreator
+        </div>
+
+        <div class="card-bottom">
+          <span>12K views</span>
+          <span>Free</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 22 -->
+
+    <article class="card"
+      data-category="gaming"
+      data-type="premium"
+      data-status="new">
+
+      <div class="thumb">
+        <img src="images/thumb-22.jpg" alt="Gaming creator">
+
+        <span class="badge">PREMIUM</span>
+        <span class="duration">18:20</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Pro Gaming Workshop
+        </div>
+
+        <div class="card-creator">
+          @ProGaming
+        </div>
+
+        <div class="card-bottom">
+          <span>11K views</span>
+          <span class="premium">Premium</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 23 -->
+
+    <article class="card"
+      data-category="music"
+      data-type="free"
+      data-status="new">
+
+      <div class="thumb">
+        <img src="images/thumb-23.jpg" alt="Music tutorial">
+
+        <span class="duration">14:25</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Music Production Basics
+        </div>
+
+        <div class="card-creator">
+          @SoundSpace
+        </div>
+
+        <div class="card-bottom">
+          <span>9K views</span>
+          <span>Free</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- CARD 24 -->
+
+    <article class="card"
+      data-category="education"
+      data-type="premium"
+      data-status="popular">
+
+      <div class="thumb">
+        <img src="images/thumb-24.jpg" alt="Learning masterclass">
+
+        <span class="badge">PREMIUM</span>
+        <span class="duration">26:08</span>
+      </div>
+
+      <div class="card-info">
+
+        <div class="card-title">
+          Complete Learning Masterclass
+        </div>
+
+        <div class="card-creator">
+          @LearnAcademy
+        </div>
+
+        <div class="card-bottom">
+          <span>8K views</span>
+          <span class="premium">Premium</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="card-action like-btn">♡ Like</button>
+          <button class="card-action save-btn">☆ Save</button>
+        </div>
+
       </div>
 
     </article>
 
   </div>
 
+
+  <div class="load-more-wrap">
+    <button class="load-more" id="loadMore">
+      Load More
+    </button>
+  </div>
+
 </section>
 
 
-<!-- PROMO -->
+<!-- =======================================================
+     PROMO
+======================================================= -->
 
 <section class="promo">
 
@@ -1253,20 +2408,126 @@ input {
     </h2>
 
     <p>
-      Get access to premium communities, exclusive creator
-      content and additional platform features.
+      Access premium creator content, exclusive communities,
+      enhanced profiles and additional platform features.
     </p>
 
   </div>
 
-  <a href="#subscriptions" class="btn-orange">
+  <button class="btn-orange" onclick="openSubscription('Premium')">
     Explore Premium
-  </a>
+  </button>
 
 </section>
 
 
-<!-- CREATORS -->
+<!-- =======================================================
+     SERVICES
+======================================================= -->
+
+<section class="services-section" id="services">
+
+  <div class="toolbar">
+
+    <h2>
+      Casp Hub <span>Services</span>
+    </h2>
+
+  </div>
+
+  <div class="services-grid">
+
+    <div class="service">
+
+      <div class="service-icon">✦</div>
+
+      <h3>Creator Profiles</h3>
+
+      <p>
+        Build a professional creator profile and showcase
+        your work, communities and services.
+      </p>
+
+    </div>
+
+
+    <div class="service">
+
+      <div class="service-icon">◈</div>
+
+      <h3>Creator Tools</h3>
+
+      <p>
+        Manage your content, audience and creator activity
+        from one convenient dashboard.
+      </p>
+
+    </div>
+
+
+    <div class="service">
+
+      <div class="service-icon">◆</div>
+
+      <h3>Communities</h3>
+
+      <p>
+        Create communities around shared interests,
+        projects and creative work.
+      </p>
+
+    </div>
+
+
+    <div class="service">
+
+      <div class="service-icon">⚡</div>
+
+      <h3>Analytics</h3>
+
+      <p>
+        Track views, followers and engagement through
+        simple creator analytics.
+      </p>
+
+    </div>
+
+
+    <div class="service">
+
+      <div class="service-icon">★</div>
+
+      <h3>Premium Content</h3>
+
+      <p>
+        Offer optional premium content and experiences
+        to your subscribers.
+      </p>
+
+    </div>
+
+
+    <div class="service">
+
+      <div class="service-icon">◎</div>
+
+      <h3>Creator Support</h3>
+
+      <p>
+        Access platform resources and support designed
+        for creators and communities.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     CREATORS
+======================================================= -->
 
 <section class="creator-section" id="creators">
 
@@ -1284,7 +2545,7 @@ input {
 
     <div class="creator">
 
-      <div class="avatar">👤</div>
+      <div class="avatar">C</div>
 
       <h3>Creative Studio</h3>
 
@@ -1299,7 +2560,7 @@ input {
 
     <div class="creator">
 
-      <div class="avatar">👤</div>
+      <div class="avatar">T</div>
 
       <h3>Tech Space</h3>
 
@@ -1314,7 +2575,7 @@ input {
 
     <div class="creator">
 
-      <div class="avatar">👤</div>
+      <div class="avatar">M</div>
 
       <h3>Music Lab</h3>
 
@@ -1329,7 +2590,7 @@ input {
 
     <div class="creator">
 
-      <div class="avatar">👤</div>
+      <div class="avatar">L</div>
 
       <h3>Learn Lab</h3>
 
@@ -1344,7 +2605,7 @@ input {
 
     <div class="creator">
 
-      <div class="avatar">👤</div>
+      <div class="avatar">D</div>
 
       <h3>Daily Hub</h3>
 
@@ -1361,7 +2622,9 @@ input {
 </section>
 
 
-<!-- SUBSCRIPTIONS -->
+<!-- =======================================================
+     SUBSCRIPTIONS
+======================================================= -->
 
 <section class="pricing-section" id="subscriptions">
 
@@ -1402,8 +2665,12 @@ input {
         <li>Basic profile</li>
       </ul>
 
-      <button class="subscribe">
+      <button
+        class="subscribe"
+        onclick="openJoin('Free')">
+
         Get Started
+
       </button>
 
     </div>
@@ -1435,8 +2702,12 @@ input {
         <li>Priority support</li>
       </ul>
 
-      <button class="subscribe">
+      <button
+        class="subscribe"
+        onclick="openSubscription('Premium')">
+
         Subscribe
+
       </button>
 
     </div>
@@ -1464,12 +2735,89 @@ input {
         <li>Creator tools</li>
       </ul>
 
-      <button class="subscribe">
+      <button
+        class="subscribe"
+        onclick="openSubscription('Creator Pro')">
+
         Start Creating
+
       </button>
 
     </div>
 
+  </div>
+
+</section>
+
+
+<!-- =======================================================
+     FAQ
+======================================================= -->
+
+<section class="faq-section">
+
+  <h2>
+    Frequently Asked <span style="color:var(--orange)">Questions</span>
+  </h2>
+
+
+  <div class="faq">
+
+    <button class="faq-question">
+      What is Casp Hub?
+      <span>+</span>
+    </button>
+
+    <div class="faq-answer">
+      Casp Hub is a creator and community platform concept
+      for discovering creators, content, services and communities.
+    </div>
+
+  </div>
+
+
+  <div class="faq">
+
+    <button class="faq-question">
+      Can I become a creator?
+      <span>+</span>
+    </button>
+
+    <div class="faq-answer">
+      Yes. The Creator Pro section is designed for people
+      who want creator tools and a professional profile.
+    </div>
+
+  </div>
+
+
+  <div class="faq">
+
+    <button class="faq-question">
+      Does the subscription button charge me?
+      <span>+</span>
+    </button>
+
+    <div class="faq-answer">
+      No. This HTML version is a frontend demo. It does not
+      process real payments.
+    </div>
+
+  </div>
+
+
+  <div class="faq">
+
+    <button class="faq-question">
+      Can I use my own thumbnails?
+      <span>+</span>
+    </button>
+
+    <div class="faq-answer">
+      Yes. Put your images in the images folder and name them
+      thumb-1.jpg, thumb-2.jpg and so on, or change the image
+      filenames inside the HTML.
+    </div>
 
   </div>
 
@@ -1478,7 +2826,9 @@ input {
 </main>
 
 
-<!-- FOOTER -->
+<!-- =======================================================
+     FOOTER
+======================================================= -->
 
 <footer class="footer">
 
@@ -1491,8 +2841,8 @@ input {
       </div>
 
       <p>
-        A modern creator and community platform
-        for discovering content, services and people.
+        A modern creator and community platform for
+        discovering content, services and people.
       </p>
 
     </div>
@@ -1502,10 +2852,10 @@ input {
 
       <h4>Explore</h4>
 
-      <a href="#">Home</a>
-      <a href="#">Trending</a>
-      <a href="#">Creators</a>
-      <a href="#">Categories</a>
+      <a href="#home">Home</a>
+      <a href="#browse">Browse</a>
+      <a href="#creators">Creators</a>
+      <a href="#services">Services</a>
 
     </div>
 
@@ -1514,10 +2864,10 @@ input {
 
       <h4>Platform</h4>
 
-      <a href="#">Subscriptions</a>
-      <a href="#">Creator Tools</a>
-      <a href="#">Services</a>
-      <a href="#">Community</a>
+      <a href="#subscriptions">Subscriptions</a>
+      <a href="#services">Creator Tools</a>
+      <a href="#services">Community</a>
+      <a href="#services">Analytics</a>
 
     </div>
 
@@ -1526,10 +2876,21 @@ input {
 
       <h4>Support</h4>
 
-      <a href="#">Help Center</a>
-      <a href="#">Contact</a>
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
+      <a href="#" onclick="showToast('Help Center coming soon'); return false;">
+        Help Center
+      </a>
+
+      <a href="#" onclick="showToast('Contact page coming soon'); return false;">
+        Contact
+      </a>
+
+      <a href="#" onclick="showToast('Privacy page coming soon'); return false;">
+        Privacy
+      </a>
+
+      <a href="#" onclick="showToast('Terms page coming soon'); return false;">
+        Terms
+      </a>
 
     </div>
 
@@ -1541,6 +2902,686 @@ input {
   </div>
 
 </footer>
+
+
+<!-- =======================================================
+     LOGIN / JOIN MODAL
+======================================================= -->
+
+<div class="modal-overlay" id="authModal">
+
+  <div class="modal">
+
+    <button class="modal-close" onclick="closeModal('authModal')">
+      ×
+    </button>
+
+    <h2 id="authTitle">
+      Welcome to Casp Hub
+    </h2>
+
+    <p id="authDescription">
+      Create your account to get started.
+    </p>
+
+
+    <form id="authForm">
+
+      <div class="form-group">
+
+        <label>
+          Name
+        </label>
+
+        <input
+          type="text"
+          id="authName"
+          placeholder="Your name"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Email
+        </label>
+
+        <input
+          type="email"
+          placeholder="you@example.com"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Password
+        </label>
+
+        <input
+          type="password"
+          placeholder="Create a password"
+          required
+        >
+
+      </div>
+
+
+      <button class="modal-submit">
+        Continue
+      </button>
+
+    </form>
+
+
+    <div class="demo-note">
+      Demo only — no real account is created.
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =======================================================
+     SUBSCRIPTION MODAL
+======================================================= -->
+
+<div class="modal-overlay" id="subscriptionModal">
+
+  <div class="modal">
+
+    <button class="modal-close" onclick="closeModal('subscriptionModal')">
+      ×
+    </button>
+
+    <h2 id="subscriptionTitle">
+      Premium
+    </h2>
+
+    <p id="subscriptionDescription">
+      Continue with this plan.
+    </p>
+
+
+    <div class="form-group">
+
+      <label>
+        Email
+      </label>
+
+      <input
+        type="email"
+        id="subscriptionEmail"
+        placeholder="you@example.com"
+      >
+
+    </div>
+
+
+    <button
+      class="modal-submit"
+      id="subscriptionContinue">
+
+      Continue
+
+    </button>
+
+
+    <div class="demo-note">
+      Demo checkout — no payment will be processed.
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =======================================================
+     TOAST
+======================================================= -->
+
+<div class="toast-container" id="toastContainer"></div>
+
+
+<!-- =======================================================
+     JAVASCRIPT
+======================================================= -->
+
+<script>
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message) {
+
+  const container =
+    document.getElementById("toastContainer");
+
+  const toast =
+    document.createElement("div");
+
+  toast.className = "toast";
+  toast.textContent = message;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 2800);
+}
+
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+function openModal(id) {
+
+  document
+    .getElementById(id)
+    .classList.add("show");
+
+  document.body.classList.add("no-scroll");
+}
+
+
+function closeModal(id) {
+
+  document
+    .getElementById(id)
+    .classList.remove("show");
+
+  document.body.classList.remove("no-scroll");
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+document
+  .getElementById("loginBtn")
+  .addEventListener("click", () => {
+
+    document.getElementById("authTitle")
+      .textContent = "Login to Casp Hub";
+
+    document.getElementById("authDescription")
+      .textContent = "Enter your details to continue.";
+
+    document.getElementById("authName")
+      .parentElement.style.display = "none";
+
+    openModal("authModal");
+
+  });
+
+
+/* =========================================================
+   JOIN
+========================================================= */
+
+document
+  .getElementById("joinBtn")
+  .addEventListener("click", () => {
+
+    openJoin("Free");
+
+  });
+
+
+function openJoin(plan) {
+
+  document.getElementById("authTitle")
+    .textContent = "Join Casp Hub";
+
+  document.getElementById("authDescription")
+    .textContent =
+    plan === "Free"
+      ? "Create your free Casp Hub account."
+      : "Create your account to continue.";
+
+  document.getElementById("authName")
+    .parentElement.style.display = "block";
+
+  openModal("authModal");
+
+}
+
+
+/* =========================================================
+   AUTH FORM
+========================================================= */
+
+document
+  .getElementById("authForm")
+  .addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    closeModal("authModal");
+
+    showToast(
+      "Demo successful — welcome to Casp Hub!"
+    );
+
+  });
+
+
+/* =========================================================
+   SUBSCRIPTIONS
+========================================================= */
+
+function openSubscription(plan) {
+
+  document.getElementById("subscriptionTitle")
+    .textContent = plan + " Plan";
+
+  document.getElementById("subscriptionDescription")
+    .textContent =
+    "You selected the " +
+    plan +
+    " plan. Continue to the demo checkout.";
+
+  openModal("subscriptionModal");
+
+}
+
+
+document
+  .getElementById("subscriptionContinue")
+  .addEventListener("click", () => {
+
+    const email =
+      document.getElementById("subscriptionEmail").value;
+
+    if (!email) {
+
+      showToast("Please enter your email.");
+
+      return;
+
+    }
+
+    closeModal("subscriptionModal");
+
+    showToast(
+      "Demo checkout selected. Connect a payment provider here."
+    );
+
+  });
+
+
+/* =========================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+========================================================= */
+
+document
+  .querySelectorAll(".modal-overlay")
+  .forEach(modal => {
+
+    modal.addEventListener("click", function(event) {
+
+      if (event.target === modal) {
+        modal.classList.remove("show");
+        document.body.classList.remove("no-scroll");
+      }
+
+    });
+
+  });
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+const searchInput =
+  document.getElementById("searchInput");
+
+const cards =
+  Array.from(document.querySelectorAll(".card"));
+
+searchInput.addEventListener("input", function() {
+
+  const query =
+    this.value.toLowerCase().trim();
+
+  cards.forEach(card => {
+
+    const text =
+      card.innerText.toLowerCase();
+
+    card.classList.toggle(
+      "hidden",
+      query && !text.includes(query)
+    );
+
+  });
+
+});
+
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+const filters =
+  document.querySelectorAll(".filter");
+
+filters.forEach(filter => {
+
+  filter.addEventListener("click", () => {
+
+    filters.forEach(f =>
+      f.classList.remove("active")
+    );
+
+    filter.classList.add("active");
+
+    const type =
+      filter.dataset.filter;
+
+    cards.forEach(card => {
+
+      let show = true;
+
+      if (type === "premium") {
+        show = card.dataset.type === "premium";
+      }
+
+      if (type === "free") {
+        show = card.dataset.type === "free";
+      }
+
+      if (type === "popular") {
+        show = card.dataset.status === "popular";
+      }
+
+      if (type === "new") {
+        show = card.dataset.status === "new";
+      }
+
+      card.classList.toggle("hidden", !show);
+
+    });
+
+  });
+
+});
+
+
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
+const categories =
+  document.querySelectorAll(".category");
+
+categories.forEach(category => {
+
+  category.addEventListener("click", event => {
+
+    event.preventDefault();
+
+    categories.forEach(c =>
+      c.classList.remove("active")
+    );
+
+    category.classList.add("active");
+
+    const selected =
+      category.dataset.category;
+
+    cards.forEach(card => {
+
+      const matches =
+        selected === "all" ||
+        card.dataset.category === selected;
+
+      card.classList.toggle(
+        "hidden",
+        !matches
+      );
+
+    });
+
+    document
+      .getElementById("browse")
+      .scrollIntoView({
+        behavior: "smooth"
+      });
+
+  });
+
+});
+
+
+/* =========================================================
+   LIKE / SAVE
+========================================================= */
+
+document
+  .querySelectorAll(".like-btn")
+  .forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      button.classList.toggle("active");
+
+      if (button.classList.contains("active")) {
+
+        button.textContent = "♥ Liked";
+
+        showToast("Added to your likes.");
+
+      } else {
+
+        button.textContent = "♡ Like";
+
+      }
+
+    });
+
+  });
+
+
+document
+  .querySelectorAll(".save-btn")
+  .forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      button.classList.toggle("active");
+
+      if (button.classList.contains("active")) {
+
+        button.textContent = "★ Saved";
+
+        showToast("Saved to your collection.");
+
+      } else {
+
+        button.textContent = "☆ Save";
+
+      }
+
+    });
+
+  });
+
+
+/* =========================================================
+   FOLLOW
+========================================================= */
+
+document
+  .querySelectorAll(".follow")
+  .forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      button.classList.toggle("following");
+
+      if (button.classList.contains("following")) {
+
+        button.textContent = "Following";
+
+        showToast("Creator followed.");
+
+      } else {
+
+        button.textContent = "Follow";
+
+        showToast("Creator unfollowed.");
+
+      }
+
+    });
+
+  });
+
+
+/* =========================================================
+   LOAD MORE
+========================================================= */
+
+document
+  .getElementById("loadMore")
+  .addEventListener("click", () => {
+
+    showToast(
+      "More content will load when connected to your backend."
+    );
+
+  });
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+const themeBtn =
+  document.getElementById("themeBtn");
+
+themeBtn.addEventListener("click", () => {
+
+  document.body.classList.toggle("light");
+
+  const isLight =
+    document.body.classList.contains("light");
+
+  localStorage.setItem(
+    "caspTheme",
+    isLight ? "light" : "dark"
+  );
+
+  themeBtn.textContent =
+    isLight ? "☾" : "☀";
+
+});
+
+
+/* Load saved theme */
+
+if (
+  localStorage.getItem("caspTheme") === "light"
+) {
+
+  document.body.classList.add("light");
+
+  themeBtn.textContent = "☾";
+
+}
+
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+document
+  .querySelectorAll(".faq-question")
+  .forEach(question => {
+
+    question.addEventListener("click", () => {
+
+      const faq =
+        question.parentElement;
+
+      faq.classList.toggle("open");
+
+      const symbol =
+        question.querySelector("span");
+
+      symbol.textContent =
+        faq.classList.contains("open")
+          ? "−"
+          : "+";
+
+    });
+
+  });
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+const mobileMenuBtn =
+  document.getElementById("mobileMenuBtn");
+
+const mobileNav =
+  document.getElementById("mobileNav");
+
+mobileMenuBtn.addEventListener("click", () => {
+
+  mobileNav.classList.toggle("show");
+
+});
+
+
+mobileNav
+  .querySelectorAll("a")
+  .forEach(link => {
+
+    link.addEventListener("click", () => {
+
+      mobileNav.classList.remove("show");
+
+    });
+
+  });
+
+
+/* =========================================================
+   ESCAPE KEY
+========================================================= */
+
+document.addEventListener("keydown", event => {
+
+  if (event.key === "Escape") {
+
+    document
+      .querySelectorAll(".modal-overlay")
+      .forEach(modal =>
+        modal.classList.remove("show")
+      );
+
+    document.body.classList.remove("no-scroll");
+
+  }
+
+});
+
+</script>
 
 </body>
 </html>
